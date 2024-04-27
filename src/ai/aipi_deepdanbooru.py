@@ -18,7 +18,7 @@ model_path = os.path.join(os.path.dirname(__file__), "deepdanbooru_model")
 bp = Blueprint("deepdanbooru", __name__)
 
 def load_model() -> tf.keras.Model:
-    return tf.keras.models.load_model(model_path + "/model-resnet_custom_v3.h5")
+    return tf.keras.models.load_model(model_path + "/model.h5")
 
 def load_labels() -> list[str]:
     with open(model_path + "/tags.txt") as f:
