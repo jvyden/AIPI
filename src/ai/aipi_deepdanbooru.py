@@ -6,14 +6,22 @@ import deepdanbooru as dd
 import numpy as np
 import PIL.Image
 
+from flask import Blueprint, request
+from aipi_util import error, success
+import traceback
+
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1" # disable CUDA
 # os.environ["XLA_FLAGS"] = "--xla_gpu_cuda_data_dir=/opt/cuda" # fix CUDA
 
+model_path = os.path.join(os.path.dirname(__file__), "deepdanbooru_model")
+
+bp = Blueprint("deepdanbooru", __name__)
+
 def load_model() -> tf.keras.Model:
-    return tf.keras.models.load_model("model/model-resnet_custom_v3.h5")
+    return tf.keras.models.load_model(model_path + "/model-resnet_custom_v3.h5")
 
 def load_labels() -> list[str]:
-    with open("model/tags.txt") as f:
+    with open(model_path + "/tags.txt") as f:
         labels = [line.strip() for line in f.readlines()]
     return labels
 
@@ -48,3 +56,20 @@ def predict(
             break
         result_threshold[label] = prob
     return result_threshold
+
+@bp.route('/predict', methods=['POST'])
+def route():
+    # Get the value of 'threshold' query parameter as a float
+    threshold = request.args.get('threshold', type=float)
+
+    if threshold is None:
+        threshold = 0.5
+
+    try:
+        image = load_image(request.data)
+        results = predict(image, threshold)
+    except Exception as e:
+        traceback.print_exc()
+        return error(str(e))
+
+    return success(results)
