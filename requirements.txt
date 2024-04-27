@@ -1,7 +1,7 @@
 flask==3.0.3
-tensorflow==2.15.0
-tensorflow-io==0.36.0
+torch==2.3.0
+torchvision==0.18.0
+timm==0.9.16
 numpy==1.26.4
 pillow==10.2.0
-deepdanbooru==1.0.2
 requests==2.31.0

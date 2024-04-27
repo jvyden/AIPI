@@ -6,7 +6,7 @@ def main():
     with open("cat.jpg", "rb") as f:
         image_bytes = f.read()
 
-    url = "http://localhost:5000/deepdanbooru/predict?threshold=0.9"
+    url = "http://localhost:5000/eva/predict?threshold=0.5"
     response = requests.post(url, data=image_bytes, headers={'Content-Type': 'application/octet-stream'})
 
     content_type = response.headers.get("Content-Type")

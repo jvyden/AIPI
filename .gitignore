@@ -1,3 +1,5 @@
 .venv/
 deepdanbooru_model/
 deepdanbooru_model*/
+eva_model/
+eva_model*/
