@@ -4,8 +4,11 @@ import traceback
 
 app = Flask("AIPI")
 
-def error(message: str):
-    return jsonify({'success': False, 'reason': message})
+def error(message: str, code: int = 500):
+    return jsonify({'success': False, 'reason': message}), code
+
+def success(data):
+    return jsonify({'success': True, 'data': data}), 200
 
 @app.route('/')
 def index():
@@ -24,9 +27,9 @@ def scan_image():
         results = scanner.predict(image, threshold)
     except Exception as e:
         traceback.print_exc()
-        return error(str(e)), 500
+        return error(str(e))
     
-    return jsonify(results), 200
+    return success(results)
 
 if __name__ == '__main__':
     app.run(debug=False)
