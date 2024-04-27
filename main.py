@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 import scanner
+import traceback
 
 app = Flask("AIPI")
 
@@ -22,6 +23,7 @@ def scan_image():
         image = scanner.load_image(request.data)
         results = scanner.predict(image, threshold)
     except Exception as e:
+        traceback.print_exc()
         return error(str(e)), 500
     
     return jsonify(results), 200
