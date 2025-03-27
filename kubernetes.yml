@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aipi
+  namespace: obliterator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aipi
+  template:
+    metadata:
+      labels:
+        app: aipi
+    spec:
+      containers:
+        - name: aipi-container
+          image: ghcr.io/jvyden/aipi:master
+          ports:
+            - containerPort: 5000
+              name: aipi-server
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "2"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aipi
+  namespace: obliterator
+spec:
+  selector:
+    app: aipi
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: aipi-server
+  type: LoadBalancer
