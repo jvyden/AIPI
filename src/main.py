@@ -12,4 +12,4 @@ def index():
 app.register_blueprint(aipi_eva.bp, url_prefix='/eva')
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=False, host="0.0.0.0")

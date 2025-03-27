@@ -22,7 +22,7 @@ device = torch.device(device)
 
 print("Loading model...")
 print("  Load")
-model = torch.load(model_path + '/model.pth', map_location='cpu').to(device)
+model = torch.load(model_path + '/model.pth', map_location='cpu', weights_only=False).to(device)
 print("  Eval")
 model.eval()
 print("  Setup transform")

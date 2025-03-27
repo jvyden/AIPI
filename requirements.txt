@@ -1,7 +1,5 @@
-flask==3.0.3
-torch==2.3.0
-torchvision==0.18.0
+flask==3.1.0
+numpy==2.2.4
+pillow==11.1.0
+requests==2.32.3
 timm==0.9.16
-numpy==1.26.4
-pillow==10.2.0
-requests==2.31.0
